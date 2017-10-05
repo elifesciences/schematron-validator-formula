@@ -1,0 +1,12 @@
+[Unit]
+Description=Schematron Validation backend service
+Documentation=
+
+[Service]
+ExecStart=/srv/backend/build/schematron-validator-api/build/libs/elife-schematron-validator-0.1.0.jar
+Restart=always
+RestartSec=10
+User=nobody
+
+[Install]
+WantedBy=multi-user.target

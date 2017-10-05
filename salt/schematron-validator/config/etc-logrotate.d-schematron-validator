@@ -1,0 +1,10 @@
+{% for extension in ['json', 'log'] %}
+/srv/personalised-covers/var/logs/*.{{ extension }} {
+    daily
+    rotate 7
+    notifempty
+    missingok
+    compress
+    copytruncate
+}
+{% endfor %}

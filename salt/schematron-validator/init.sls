@@ -39,8 +39,22 @@ schematron-validator-composer-install:
 schematron-validator-gradle-assemble:
     cmd.run:
       - name: ./gradlew assemble
-      - cwd: /srv/schematron-validator/app/backend
+      - cwd: /srv/schematron-validator/backend
       - user: {{ pillar.elife.deploy_user.username }}
+
+schematron-validator-backend-service:
+    file.managed:
+        - name: /etc/init/schematron-validator-backend.conf
+        - source: salt://schematron-validator/config/etc-init.d-schematron-validator-backend.conf
+        - template: jinja
+        - require:
+            - schematron-validator-gradle-assemble
+
+    cmd.run:
+        - name: service schematron-validator-backend restart
+        - require:
+            - file: schematron-validator-backend-service
+            - schematron-validator-gradle-assemble
 
 schematron-validator-nginx-vhost:
     file.managed:
