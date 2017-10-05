@@ -2,7 +2,7 @@ schematron-validator-repository:
     builder.git_latest:
       - name: git@github.com:elifesciences/schematron-validator.git
       - identity: {{ pillar.elife.projects_builder.key or '' }}
-      - rev: {{ salt['elive.rev']() }}
+      - rev: {{ salt['elife.rev']() }}
       - branch: {{ salt['elife.branch']() }}
       - target: /srv/schematron-validator/
       - force_fetch: True
