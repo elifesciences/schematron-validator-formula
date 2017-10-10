@@ -8,7 +8,6 @@ schematron-validator-repository:
       - force_fetch: True
       - force_checkout: True
       - force_reset: True
-      - fetch_pull_requests: True
       - submodules: True
       - require:
           - install-composer
@@ -44,8 +43,8 @@ schematron-validator-gradle-assemble:
 
 schematron-validator-backend-service:
     file.managed:
-        - name: /etc/init/schematron-validator-backend.conf
-        - source: salt://schematron-validator/config/etc-init.d-schematron-validator-backend.conf
+        - name: /lib/systemd/system/schematron-validator-backend.service
+        - source: salt://schematron-validator/config/lib-systemd-system-schematron-validator-backend.service
         - template: jinja
         - require:
             - schematron-validator-gradle-assemble
