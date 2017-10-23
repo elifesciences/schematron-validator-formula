@@ -68,7 +68,7 @@ schematron-validator-cache:
         - require:
             - file: schematron-validator-cache
 
-schematrion-validator-logs:
+schematron-validator-logs:
     file.directory:
         - name: /srv/schematron-validator/var/logs
         - user: {{ pillar.elife.webserver.username }}
