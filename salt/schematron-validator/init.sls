@@ -41,7 +41,7 @@ schematron-validator-gradle-assemble:
       - cwd: /srv/schematron-validator/backend
       - user: {{ pillar.elife.deploy_user.username }}
 
-schematron-validator-backend-service:
+schematron-validator-systemd-unit:
     file.managed:
         - name: /lib/systemd/system/schematron-validator-backend.service
         - source: salt://schematron-validator/config/lib-systemd-system-schematron-validator-backend.service
@@ -49,11 +49,11 @@ schematron-validator-backend-service:
         - require:
             - schematron-validator-gradle-assemble
 
-    cmd.run:
-        - name: service schematron-validator-backend restart
+schematron-validator-backend-service:
+    service.running:
+        - name: schematron-validator-backend
         - require:
-            - file: schematron-validator-backend-service
-            - schematron-validator-gradle-assemble
+            - schematron-validator-systemd-unit
 
 schematron-validator-nginx-vhost:
     file.managed:
