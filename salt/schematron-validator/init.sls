@@ -49,6 +49,41 @@ schematron-validator-systemd-unit:
         - require:
             - schematron-validator-gradle-assemble
 
+schematron-validator-cache:
+    file.directory:
+        - name: /srv/schematron-validator/var
+        - user: {{ pillar.elife.webserver.username }}
+        - group: {{ pillar.elife.webserver.username }}
+        - dir_mode: 775
+        - file_mode: 664
+        - recurse:
+            - user
+            - group
+            - mode
+        - require:
+            - schematron-validator-repository
+
+    cmd.run:
+        - name: chmod -R g+s /srv/schematron-validator/var
+        - require:
+            - file: schematron-validator-cache
+
+schematrion-validator-logs:
+    file.directory:
+        - name: /srv/schematron-validator/var/logs
+        - user: {{ pillar.elife.webserver.username }}
+        - group: {{ pillar.elife.webserver.username }}
+        - dir_mode: 775
+        - file_mode: 664
+        - recurse:
+            - user
+            - group
+            - mode
+        - require:
+            - schematron-validator-cache
+    cmd.run:
+        - name: chmod -R g+s /srv/schematron-validator/var/logs
+
 schematron-validator-backend-service:
     service.running:
         - name: schematron-validator-backend
@@ -74,6 +109,7 @@ syslog-ng-schematron-validator-logs:
         - template: jinja
         - require:
             - pkg: syslog-ng
+            - schematron-validator-logs
             - schematron-validator-composer-install
             - schematron-validator-gradle-assemble
         - listen_in:
