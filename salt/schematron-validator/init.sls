@@ -121,4 +121,9 @@ syslog-ng-schematron-validator-logs:
         - listen_in:
             - service: syslog-ng
 
-
+schematron-validator-backend-ready:
+    cmd.run:
+        - name: wait_for_port 8080
+        - user: {{ pillar.elife.deploy_user.username }}
+        - require:
+            - schematron-validator-backend-service
