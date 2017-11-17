@@ -48,6 +48,12 @@ schematron-validator-systemd-unit:
         - template: jinja
         - require:
             - schematron-validator-gradle-assemble
+        - require_in:
+            - cmd: schematron-validator-backend-sd-reload
+
+schematron-validator-backend-sd-reload:
+    cmd.run:
+      - name: systemctl daemon-reload
 
 schematron-validator-cache:
     file.directory:
