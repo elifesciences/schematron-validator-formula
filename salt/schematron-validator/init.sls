@@ -48,6 +48,12 @@ schematron-validator-systemd-unit:
         - template: jinja
         - require:
             - schematron-validator-gradle-assemble
+        - require_in:
+            - cmd: schematron-validator-backend-sd-reload
+
+schematron-validator-backend-sd-reload:
+    cmd.run:
+      - name: systemctl daemon-reload
 
 schematron-validator-cache:
     file.directory:
@@ -115,4 +121,9 @@ syslog-ng-schematron-validator-logs:
         - listen_in:
             - service: syslog-ng
 
-
+schematron-validator-backend-ready:
+    cmd.run:
+        - name: wait_for_port 8080
+        - user: {{ pillar.elife.deploy_user.username }}
+        - require:
+            - schematron-validator-backend-service
