@@ -94,7 +94,10 @@ schematron-validator-backend-service:
     service.running:
         - name: schematron-validator-backend
         - require:
+            - schematron-validator-gradle-assemble
             - schematron-validator-systemd-unit
+        - watch:
+            - schematron-validator-repository
 
 schematron-validator-nginx-vhost:
     file.managed:
