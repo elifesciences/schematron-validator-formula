@@ -53,7 +53,9 @@ schematron-validator-systemd-unit:
 
 schematron-validator-backend-sd-reload:
     cmd.run:
-      - name: systemctl daemon-reload
+      - name: |
+          systemctl daemon-reload
+          systemctl enable schematron-validator-backend
 
 schematron-validator-cache:
     file.directory:
