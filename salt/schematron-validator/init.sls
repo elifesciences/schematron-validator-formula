@@ -35,11 +35,20 @@ schematron-validator-composer-install:
       - cwd: /srv/schematron-validator/
       - user: {{ pillar.elife.deploy_user.username }}
 
+java-jdk-8:
+    pkg.installed:
+        - pkgs:
+            - openjdk-8-jdk
+        - require:
+            - java8
+
 schematron-validator-gradle-assemble:
     cmd.run:
       - name: ./gradlew assemble
       - cwd: /srv/schematron-validator/backend
       - user: {{ pillar.elife.deploy_user.username }}
+      - require:
+          - java-jdk-8
 
 schematron-validator-systemd-unit:
     file.managed:
