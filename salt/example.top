@@ -7,3 +7,5 @@ base:
         - elife.nginx-php7
         - elife.java8
         - schematron-validator
+        # for testing
+        - elife.proofreader-php
