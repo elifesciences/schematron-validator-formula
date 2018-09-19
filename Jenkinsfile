@@ -1,1 +1,1 @@
-elifeFormula('schematron-validator', '/srv/schematron-validator', 'schematron-validator-formula')
+elifeFormula('schematron-validator', '/srv/schematron-validator')
